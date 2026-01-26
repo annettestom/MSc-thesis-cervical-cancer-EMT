@@ -1,0 +1,19 @@
+# R junk
+.Rhistory
+.RData
+.Rproj.user
+
+# Large data files
+*.rds
+
+#External resources
+gene_sets/
+
+#Work in progress
+EMT_scoring_and_cox_model/
+
+# OS
+.DS_Store
+
+#Virtual environment
+.venv/
