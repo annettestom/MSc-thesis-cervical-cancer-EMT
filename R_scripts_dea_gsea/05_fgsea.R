@@ -1,7 +1,9 @@
 library(DESeq2)
 
 dds <- readRDS("results/dea/dds_deseq.rds")
+levels(colData(dds)$condition)
 res <- results(dds)
+mcols(res)$description
 
 #if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager")
 #BiocManager::install(c("fgsea", "org.Hs.eg.db", "AnnotationDbi"))
@@ -34,11 +36,13 @@ names(gene_ranks_sym) <- symbols[keep]
 #check for duplicated ensembl IDs
 sum(duplicated(names(gene_ranks_sym)))
 #there are 86 duplicates - keeping the strongest signal per gene symbol
-gene_ranks_sym <- tapply(gene_ranks_sym, names(gene_ranks_sym), max)
+gene_ranks_sym <- tapply(gene_ranks_sym, names(gene_ranks_sym), function(x) x[which.max(abs(x))])
 gene_ranks_sym <- sort(gene_ranks_sym, decreasing = TRUE)
 head(gene_ranks_sym)
 tail(gene_ranks_sym)
 dim(gene_ranks_sym)
+
+
 
 #Step 3 - make the pathways list for the second input from hallmark gene set
 gmt_path <- "/home/annettestomakhin/Magistritöö/gene_sets/HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION.v2025.1.Hs.gmt"
@@ -53,7 +57,6 @@ emt_genes <- unique(emt_genes)
 emt_genes <- emt_genes[nzchar(emt_genes)]
 gs_name
 length(emt_genes)
-head(emt_genes)
 
 #Step 4 - check if the genes match 
 sum(names(gene_ranks_sym) %in% emt_genes)

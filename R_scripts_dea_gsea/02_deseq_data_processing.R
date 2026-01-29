@@ -33,6 +33,15 @@ any(duplicated(rownames(tcga$counts_01)))
 any(duplicated(rownames(gtex_counts)))
 dim(tcga$counts_01)
 dim(gtex_counts)
+#are all values whole numbers?
+stopifnot(all(tcga$counts_01 == round(tcga$counts_01)))
+stopifnot(all(gtex_counts == round(gtex_counts)))
+#storage mode of the count values
+storage.mode(tcga$counts_01)
+storage.mode(gtex_counts)
+#cast count values to integers
+storage.mode(tcga$counts_01) <- "integer"
+storage.mode(gtex_counts) <- "integer"
 
 #Step 4 - merging TCGA and GTEx data - aligning Ensembl IDs and concatting columns
 #first using intersect() to find the common genes and create new matrixes with only those common genes
@@ -42,16 +51,26 @@ gtex2 <- gtex_counts[common_genes, , drop = FALSE]
 stopifnot(identical(rownames(tcga2), rownames(gtex2)))
 #use cbind() to merge counts
 counts_merged <- cbind(tcga2, gtex2)
+#check if counts_merged colnames go in order
+stopifnot(all(colnames(counts_merged)[1:ncol(tcga2)] == colnames(tcga2)))
+stopifnot(all(colnames(counts_merged)[(ncol(tcga2)+1):ncol(counts_merged)] == colnames(gtex2)))
+#storage mode of the counts
+storage.mode(counts_merged)
+
 
 #Step 5 - making a sample table colData with conditions "tumor" and "normal"
 #conditions are categorical values - "normal" is the reference and "tumor" is the comparison
 condition <- c(rep("tumor", ncol(tcga2)), rep("normal", ncol(gtex2)))
 coldata <- data.frame(condition = factor(condition, levels = c("normal", "tumor")))
 rownames(coldata) <- colnames(counts_merged)
+table(coldata$condition)
 dim(coldata)
 dim(counts_merged)
 any(duplicated(rownames(counts_merged)))
+any(duplicated(rownames(counts_merged)))
 any(is.na(rownames(counts_merged)))
+any(is.na(colnames(counts_merged)))
+any(colnames(counts_merged) == "")
 head(coldata)
 tail(coldata)
 
