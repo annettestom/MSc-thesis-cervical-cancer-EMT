@@ -42,8 +42,6 @@ head(gene_ranks_sym)
 tail(gene_ranks_sym)
 dim(gene_ranks_sym)
 
-
-
 #Step 3 - make the pathways list for the second input from hallmark gene set
 gmt_path <- "/home/annettestomakhin/Magistritöö/gene_sets/HALLMARK_EPITHELIAL_MESENCHYMAL_TRANSITION.v2025.1.Hs.gmt"
 ln <- readLines(gmt_path)
@@ -80,7 +78,6 @@ write.csv(fg_out, out_path, row.names = TRUE)
 saveRDS(fg, file = "results/gsea/gsea_EMT_fgsea_full.rds")
 
 #Step 7 - visualize how the running-sum changes through the ranks (running enrichment-score)
-library(fgsea)
 library(ggplot2)
 plotEnrichment(
   pathways[[1]],          # EMT genes (character vector)
@@ -99,5 +96,5 @@ length(leading)
 leading_df <- data.frame(gene = leading, stat = unname(gene_ranks_sym[leading]))
 leading_df <- leading_df[order(leading_df$stat), ]
 tail(leading_df)
-out_path_leading <- "results/gsea/gsea_EMT_fgsea_leading_genes.csv"
+out_path_leading <- "results/gsea/gsea_EMT_fgsea_leading_genes_2.csv"
 write.csv(leading_df, out_path_leading, row.names = TRUE)

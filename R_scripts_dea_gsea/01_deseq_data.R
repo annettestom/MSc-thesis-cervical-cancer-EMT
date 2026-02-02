@@ -18,6 +18,14 @@ proj_info_tcga_cesc
 rse_tcga_cesc <- create_rse(proj_info_tcga_cesc)
 
 rse_tcga_cesc
+rowData(rse_tcga_cesc)
+colnames(rowData(rse_tcga_cesc))
+head(as.data.frame(rowData(rse_tcga_cesc)))
+
+#exporting a genes table for modeling later on
+genes <- as.data.frame(rowData(rse_tcga_cesc))
+
+write.table(genes, file = "results/files_for_python/tcga_genes_rowData.tsv", sep = "\t", quote = FALSE, col.names = NA)
 
 #I want only primary tumor samples in the tcga project
 head(colData(rse_tcga_cesc)$tcga.tcga_barcode, 10)

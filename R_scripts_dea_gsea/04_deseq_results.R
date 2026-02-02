@@ -2,9 +2,11 @@ library(DESeq2)
 
 dds <- readRDS("results/dea/dds_deseq.rds")
 dds
+
 assayNames(dds)
 resultsNames(dds)
 res <- results(dds)
+
 head(res)
 summary(res)
 head(res[order(res$padj), ])
