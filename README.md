@@ -21,3 +21,4 @@ All results can be reproduced by running the scripts in numerical order.
 - R 4.5.2
 - DESeq2
 - fgsea
+- Python 3.12.3
