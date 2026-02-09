@@ -9,9 +9,7 @@ R_scripts_dea_gsea/results/files_for_python/
 
 #External resources
 gene_sets/
-
-#Work in progress
-EMT_scoring_and_cox_model/
+EMT_scoring_and_cox_model/results/tcga_logcpm_01.tsv
 
 # OS
 .DS_Store

@@ -1,0 +1,6 @@
+Model: Cox proportional hazards
+Predictors: EMT (z-scored)
+n_samples: 291
+n_events: 71
+Baseline estimation: breslow
+PH assumption checked using Schoenfeld residuals

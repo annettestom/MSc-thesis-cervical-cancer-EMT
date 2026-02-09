@@ -10,6 +10,25 @@ dim(assay(gtex))
 head(colnames(assay(gtex)))
 head(rownames(assay(gtex)))
 
+#Cheking if stripping went right, PAR_Y genes got collapsed
+ids <- rownames(tcga$counts_01)
+
+# old stripping (drops everything after first dot)
+old <- sub("\\..*$", "", ids)
+
+# new stripping (removes only version, keeps suffix like _PAR_Y)
+new <- gsub("\\.\\d+(?=_|$)", "", ids, perl=TRUE)
+
+cat("IDs:", length(ids), "\n")
+cat("Unique old:", length(unique(old)), "\n")
+cat("Unique new:", length(unique(new)), "\n")
+cat("Collisions introduced by old:", length(unique(new)) - length(unique(old)), "\n")
+
+
+sum(grepl("_PAR_Y$", new))
+
+#45 PAR_Y genes got collapsed, rerun DESeq2 and GSEA with correct stripping
+
 
 #Step 1 - stripping Ensembl ID verion numbers to make genes comparable
 #TCGA counts matrix stripping - sub() replaces the pattern "\\..*S" with an empty string

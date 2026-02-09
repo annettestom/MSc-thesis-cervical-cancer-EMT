@@ -1,0 +1,1 @@
+Multigroup log-rank test p-value: 0.0028321419496313916

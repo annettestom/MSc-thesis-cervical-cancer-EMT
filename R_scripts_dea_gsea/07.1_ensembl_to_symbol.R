@@ -5,9 +5,10 @@ tcga <- readRDS("results/dea/tcga_cesc_primary_01.rds")
 dim(tcga$counts_01)
 
 #Step 1 - strip Ensembl IDs from counts_01
-ens <- unique(sub("\\..*$", "", rownames(tcga$counts_01)))
+ens <- unique(sub("\\.\\d+(?=_|$)", "", rownames(tcga$counts_01), perl = TRUE))
 length(ens)
 head(ens)
+sum(grepl("_PAR_Y$", ens))
 
 #Step 2 - map the IDs to gene names
 map <- AnnotationDbi::select(
@@ -22,6 +23,7 @@ head(map)
 #Step 3 - keep only non NA and non empty values, remove duplicates
 map <- map[!is.na(map$SYMBOL) & map$SYMBOL != "", ]
 map <- unique(map)
+sum(grepl("_PAR_Y$", map$ENSEMBL))
 
 write.table(map, "results/annotation/ensembl_to_symbol.tsv", sep="\t", quote=FALSE, row.names=FALSE)
 
@@ -59,7 +61,7 @@ head(dup_sym)
 
 #Step 7 - remove duplicates - keep highest-expression Ensembl per symbol
 counts <- tcga$counts_01
-rownames(counts) <- sub("\\..*$", "", rownames(counts))
+rownames(counts) <- sub("\\.\\d+(?=_|$)", "", rownames(tcga$counts_01), perl = TRUE)
 
 gene_means <- rowMeans(counts)
 emt_map$mean_expr <- gene_means[emt_map$ENSEMBL]
