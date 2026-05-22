@@ -1,0 +1,5 @@
+Model: Cox proportional hazards
+Predictors: EMT (z-scored) and one-hot encoded FIGO stage
+n_samples: 285
+n_events: 71
+Baseline estimation: breslow

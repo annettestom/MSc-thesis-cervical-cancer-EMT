@@ -12,6 +12,13 @@ summary(res)
 head(res[order(res$padj), ])
 table(is.na(res$padj))
 
+#change "tumor" into "tumour"
+colData(dds)$condition <- factor(
+  colData(dds)$condition,
+  levels = c("normal", "tumor"),
+  labels = c("normal", "tumour")
+)
+
 #how many genes were tested - number of rows in res
 n_tested <- nrow(res)
 n_tested
@@ -74,9 +81,9 @@ plot(
   -log10(res_df$padj),
   pch = 16,
   col = ifelse(res_df$significant == "Significant", "red", "grey"),
-  xlab = "log2 fold change (tumor vs normal)",
+  xlab = "log2 fold change (tumour vs normal)",
   ylab = "-log10 adjusted p-value",
-  main = "Volcano plot: tumor vs normal"
+  main = "Volcano plot: tumour vs normal"
 )
 abline(v = c(-lfc_cutoff, lfc_cutoff), lty = 2)
 abline(h = -log10(padj_cutoff), lty = 2)

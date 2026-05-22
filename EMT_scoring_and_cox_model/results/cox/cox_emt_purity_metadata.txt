@@ -1,0 +1,5 @@
+Model: Cox proportional hazards
+Predictors: EMT (z-scored) and scaled tumour purity (tumour purity % / 10)
+n_samples: 291
+n_events: 71
+Baseline estimation: breslow

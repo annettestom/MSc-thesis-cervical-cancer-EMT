@@ -27,31 +27,30 @@ cat("Collisions introduced by old:", length(unique(new)) - length(unique(old)), 
 
 sum(grepl("_PAR_Y$", new))
 
-#45 PAR_Y genes got collapsed, rerun DESeq2 and GSEA with correct stripping
+#45 PAR_Y genes got collapsed
 
 
 #Step 1 - stripping Ensembl ID verion numbers to make genes comparable
 #TCGA counts matrix stripping - sub() replaces the pattern "\\..*S" with an empty string
-rownames(tcga$counts_01) <- sub("\\..*$", "", rownames(tcga$counts_01))
+rownames(tcga$counts_01) <- gsub("\\.\\d+(?=_|$)", "", rownames(tcga$counts_01), perl=TRUE)
 head(rownames(tcga$counts_01))
 
 #Step 2 - GTEx assay matrix Ensembl ID version stripping
 #First I save the assay into a dataframe
 gtex_counts <- assay(gtex)
-rownames(gtex_counts) <- sub("\\..*$", "", rownames(gtex_counts))
+rownames(gtex_counts) <- gsub("\\.\\d+(?=_|$)", "", rownames(gtex_counts), perl=TRUE)
 head(rownames(gtex_counts))
 
 #Step 3 - checking for duplicate gene IDs before merging
 any(duplicated(rownames(tcga$counts_01)))
 any(duplicated(rownames(gtex_counts)))
-#both were TRUE - now summing counts across duplicated rows with rowsum()
-tcga$counts_01 <- rowsum(tcga$counts_01, group = rownames(tcga$counts_01))
-gtex_counts <- rowsum(gtex_counts, group = rownames(gtex_counts))
-#checking if it worked
-any(duplicated(rownames(tcga$counts_01)))
-any(duplicated(rownames(gtex_counts)))
+
 dim(tcga$counts_01)
 dim(gtex_counts)
+
+stopifnot(!any(duplicated(rownames(tcga$counts_01))))
+stopifnot(!any(duplicated(rownames(gtex_counts))))
+
 #are all values whole numbers?
 stopifnot(all(tcga$counts_01 == round(tcga$counts_01)))
 stopifnot(all(gtex_counts == round(gtex_counts)))
@@ -78,14 +77,13 @@ storage.mode(counts_merged)
 
 
 #Step 5 - making a sample table colData with conditions "tumor" and "normal"
-#conditions are categorical values - "normal" is the reference and "tumor" is the comparison
+#conditions are categorical values - "normal" is the baseline level tumour is compared to
 condition <- c(rep("tumor", ncol(tcga2)), rep("normal", ncol(gtex2)))
 coldata <- data.frame(condition = factor(condition, levels = c("normal", "tumor")))
 rownames(coldata) <- colnames(counts_merged)
 table(coldata$condition)
 dim(coldata)
 dim(counts_merged)
-any(duplicated(rownames(counts_merged)))
 any(duplicated(rownames(counts_merged)))
 any(is.na(rownames(counts_merged)))
 any(is.na(colnames(counts_merged)))
@@ -112,4 +110,4 @@ levels(colData(dds)$condition)
 #check for sample uniqueness
 any(duplicated(colnames(dds)))
 #saving dds to an RDS file
-saveRDS(dds, "dds_filtered.rds")
+saveRDS(dds, "results/dea/dds_filtered.rds")

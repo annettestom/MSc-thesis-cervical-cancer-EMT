@@ -4,6 +4,7 @@ dds <- readRDS("results/dea/dds_deseq.rds")
 levels(colData(dds)$condition)
 res <- results(dds)
 mcols(res)$description
+resultsNames(dds)
 
 #if (!requireNamespace("BiocManager", quietly=TRUE)) install.packages("BiocManager")
 #BiocManager::install(c("fgsea", "org.Hs.eg.db", "AnnotationDbi"))
@@ -83,9 +84,9 @@ plotEnrichment(
   pathways[[1]],          # EMT genes (character vector)
   gene_ranks_sym          # your ranked stats (named numeric vector)
 ) + ggplot2::labs(
-  title = "GSEA: Hallmark EMT (tumor vs normal)",
+  title = "GSEA: Hallmark EMT (tumour vs normal)",
   subtitle = sprintf("NES = %.2f, FDR = %.2e", fg$NES[1], fg$padj[1]),
-  x = "Genes ranked by DESeq2 Wald statistic (tumor vs normal)",
+  x = "Genes ranked by DESeq2 Wald statistic (tumour vs normal)",
   y = "Running enrichment score"
 )
 
@@ -96,5 +97,5 @@ length(leading)
 leading_df <- data.frame(gene = leading, stat = unname(gene_ranks_sym[leading]))
 leading_df <- leading_df[order(leading_df$stat), ]
 tail(leading_df)
-out_path_leading <- "results/gsea/gsea_EMT_fgsea_leading_genes_2.csv"
+out_path_leading <- "results/gsea/Supplementary_Table_S3_leading_genes.csv"
 write.csv(leading_df, out_path_leading, row.names = TRUE)
