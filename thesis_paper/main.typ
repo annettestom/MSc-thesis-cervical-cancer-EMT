@@ -454,19 +454,20 @@ Tulemuste tõlgendamisel tuleb arvestada mitmete piirangutega, sealhulgas väike
 
 #heading(level: 1, numbering: none)[Used artificial intelligence tools]
 
-Artificial intelligence (AI) tools were used during this thesis to support selected stages of the research and data analysis workflow.
-
-ChatGPT (GPT-5.5, OpenAI, 2026) was used during the programming and data analysis process for reviewing and improving R and Python code, identifying programming errors, explaining statistical methods and bioinformatics workflows, and assisting with optimization and restructuring of analysis scripts. The tool was also used for troubleshooting software-related issues and improving code readability and reproducibility. All analytical decisions, interpretation of results, and final implementation of the methods were independently verified by the author.
+Artificial intelligence (AI) tools were used to support selected stages of this thesis. ChatGPT (GPT-5.5, OpenAI, 2026) was used for code review, troubleshooting, and clarification of statistical and bioinformatics methods. Grok (DeepSearch, xAI, 2026) was used to support literature searching and identification of potentially relevant publications. All cited sources were checked by the author.
 
 References:
 
 OpenAI. (2026). ChatGPT (GPT-5.5) [Large language model]. #link("https://openai.com/index/introducing-gpt-5-5/")
+
+xAI. (2026). Grok (DeepSearch) [Large language model]. #link("https://grok.com/")
 
 
 
 #pagebreak()
 
 #heading(level: 1, numbering: none)[Supplementary material]
+The analysis code, selected outputs, supplementary tables, and thesis source files are available in the GitHub repository #link("https://github.com/annettestom/MSc-thesis-cervical-cancer-EMT.git").
 
 #heading(level: 2, numbering: none)[Supplementary Figure 1]
 
