@@ -16,3 +16,5 @@ EMT_scoring_and_cox_model/results/tcga_logcpm_01.tsv
 
 #Virtual environment
 .venv/
+# Local review artifacts
+_review*

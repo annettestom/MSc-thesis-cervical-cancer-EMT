@@ -97,5 +97,5 @@ length(leading)
 leading_df <- data.frame(gene = leading, stat = unname(gene_ranks_sym[leading]))
 leading_df <- leading_df[order(leading_df$stat), ]
 tail(leading_df)
-out_path_leading <- "results/gsea/Supplementary_Table_S3_leading_genes.csv"
+out_path_leading <- "results/gsea/Supplementary_Table_S4_leading_genes.csv"
 write.csv(leading_df, out_path_leading, row.names = TRUE)

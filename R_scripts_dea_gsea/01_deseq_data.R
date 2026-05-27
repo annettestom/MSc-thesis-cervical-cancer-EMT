@@ -41,8 +41,9 @@ dim(counts_01)
 
 meta_01 <- as.data.frame(colData(rse_tcga_cesc))[keep01, , drop = FALSE]
 table(substr(vapply(strsplit(meta_01$tcga.tcga_barcode, "-"), `[`, "", 4), 1, 2))
+#with Magistritöö/R_scripts_dea_gsea as working directory
 
-saveRDS(list(counts_01 = counts_01, meta_01 = meta_01), "tcga_cesc_primary_01.rds")
+saveRDS(list(counts_01 = counts_01, meta_01 = meta_01), "results/dea/tcga_cesc_primary_01.rds")
 
 #Now GTEx
 proj_info_gtex_cervix <- subset(proj_info_gtex, project == "CERVIX_UTERI")
@@ -61,4 +62,4 @@ dim(assay(rse_gtex))
 table(colData(rse_gtex)$gtex.smts)
 table(colData(rse_gtex)$gtex.smtsd)
 #saving the RSE as an rds file
-saveRDS(rse_gtex, "gtex_cervix_rse.rds")
+saveRDS(rse_gtex, "results/dea/gtex_cervix_rse.rds")
