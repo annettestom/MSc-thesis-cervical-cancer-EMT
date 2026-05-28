@@ -476,7 +476,7 @@ The analysis code, selected outputs, supplementary tables, and thesis source fil
 #heading(level: 2, numbering: none)[Supplementary Figure 2]
 
 #figure(
-  image("images/schoenfeld2_purity.png", width: 80%), numbering: none, caption: [Figure 2: Scaled Schoenfeld residuals of "tumour purity". No time-dependent effects of tumour purity on hazard were observed (Schoenfeld residual test p = 0.3787) ]
+  image("images/Scaled_schoenfeld.png", width: 80%), numbering: none, caption: [Figure 2: Scaled Schoenfeld residuals of "tumour purity". No time-dependent effects of tumour purity on hazard were observed (Schoenfeld residual test p = 0.3787) ]
 ) <Schoenfeld2>
 
 #heading(level: 2, numbering: none)[Supplementary Figure 3]
